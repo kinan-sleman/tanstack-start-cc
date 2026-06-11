@@ -9,11 +9,11 @@ import tailwindcss from '@tailwindcss/vite'
 import netlify from '@netlify/vite-plugin-tanstack-start'
 
 const config = defineConfig({
-  resolve: { tsconfigPaths: true },
+  resolve: { tsconfigPaths: true }, // This allows us to use the `#` alias for `src` in our imports, e.g.import Navbar from '#/components/Navbar'
   plugins: [
-    devtools(),
-    netlify(),
-    tailwindcss(),
+    devtools(), // This adds the TanStack Devtools to our app, which you can open by pressing `ctrl + shift + d` in your browser
+    netlify(), // This adds support for Netlify Functions, which you can use to create serverless API routes. See https://tanstack.com/start/docs/netlify for more details.
+    tailwindcss(), // This adds support for Tailwind CSS, which you can use to style your app. See https://tanstack.com/start/docs/tailwind for more details.
     tanstackStart(),
     viteReact(),
     babel({ presets: [reactCompilerPreset()] }),
