@@ -1,6 +1,10 @@
 import SkillCard from "#/components/SkillCard";
 import { createFileRoute } from "@tanstack/react-router";
 
+// the defination here always has to be `export const Route = createFileRoute(...)` 
+// because the route tree generator looks for that specific export when it generates the route tree from the files in the `src/routes` directory. 
+// The argument to `createFileRoute` is the path of the route, which should match the file path relative to the `src/routes` directory. 
+// The object passed to `createFileRoute` should have a `component` property, which is the React component that should be rendered when the route is matched. In this case, we are rendering the `Home` component when the path is `/`.
 export const Route = createFileRoute("/")({ component: Home });
 const skills = [
 	{ id: 1, name: "React.js" },
@@ -27,10 +31,10 @@ const skills = [
 function Home() {
 	return (
 		<div className="p-8">
-			<ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
-        {skills.map((skill) => (
-          <li key={skill.id}>
-            <SkillCard name={skill.name} />
+			<ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {skills.map(({id,name}) => (
+          <li key={id}>
+            <SkillCard name={name} />
           </li>
         ))}
       </ul>
