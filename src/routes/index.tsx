@@ -1,5 +1,6 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
 import { Shield, Swords, Heart, Zap, Sparkles } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
+import { getPokemonFn } from "#/server/pokemon";
 
 interface PokemonData {
 	name: string;
@@ -31,8 +32,6 @@ interface PokemonData {
 	}>;
 }
 
-const POKEMON_API_URL = "https://pokeapi.co/api/v2/pokemon/ditto";
-
 export const Route = createFileRoute("/")({
 	component: Home,
 	pendingComponent: async () => {
@@ -51,11 +50,7 @@ export const Route = createFileRoute("/")({
 		);
 	},
 	loader: async (): Promise<PokemonData> => {
-		const response = await fetch(POKEMON_API_URL);
-		const data = await response.json();
-		if(!data.abilities || data.abilities.length === 0) {
-			throw notFound();
-		}
+		const data = await getPokemonFn();
 		return data;
 	},
 	notFoundComponent: async () => {
@@ -63,8 +58,8 @@ export const Route = createFileRoute("/")({
 			<h3 className="text-center text-lg font-medium text-slate-500">
 				Pokemon not found.
 			</h3>
-		)
-	}
+		);
+	},
 });
 
 function Home() {
